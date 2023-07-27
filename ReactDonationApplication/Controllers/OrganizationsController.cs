@@ -39,7 +39,7 @@ namespace ReactDonationApplication.Controllers
         }
 
         [HttpGet("countrycode/{countryCode}")]
-        public JsonResult GetOrganizationsByCountryCode([FromRoute(Name = "countrycode")] string countryCode)
+        public JsonResult GetOrganizationsByCountryCode(string countryCode)
         {
             DataTable dt = new DataTable();
             string connectionString = _configuration.GetConnectionString("connectionString");
