@@ -38,6 +38,46 @@ namespace ReactDonationApplication.Controllers
             return new JsonResult(dt);
         }
 
+        [HttpGet("countrycode/{countryCode}")]
+        public JsonResult GetOrganizationsByCountryCode([FromRoute(Name = "countrycode")] string countryCode)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = _configuration.GetConnectionString("connectionString");
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("dbo.GET_ORGANIZATIONS_BY_COUNTRY_CODE", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@OrganizationCountryCode", countryCode);
+                dt.Load(cmd.ExecuteReader());
+                connection.Close();
+            }
+
+            return new JsonResult(dt);
+        }
+        //[FromRoute(Name = "organizationDetails")] 
+        [HttpGet("organizationDetails/{orgId}")]
+        public JsonResult GetOrganizationDetails(int orgId)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = _configuration.GetConnectionString("connectionString");
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("dbo.GET_ORGANIZATION_BY_ID", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", orgId);
+                dt.Load(cmd.ExecuteReader());
+                connection.Close();
+            }
+
+            return new JsonResult(dt);
+        }
+
         [HttpPost]
         [HttpPut]
         public JsonResult PostPutOrganizations(OrganizationsModel org)
