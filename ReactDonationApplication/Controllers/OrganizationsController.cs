@@ -110,7 +110,7 @@ namespace ReactDonationApplication.Controllers
             else return new JsonResult("Updated Successfully");
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("deleteOrganization/{id}")]
         public JsonResult DeleteOrganizations(int id)
         {
             DataTable dt = new DataTable();

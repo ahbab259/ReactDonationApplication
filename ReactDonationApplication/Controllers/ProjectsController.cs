@@ -156,5 +156,25 @@ namespace ReactDonationApplication.Controllers
                 return new JsonResult("anonymous.png");
             }
         }
+
+        [HttpDelete("deleteProject/{id}")]
+        public JsonResult DeleteProject(int id)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = _configuration.GetConnectionString("connectionString");
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                SqlCommand cmd = new SqlCommand("dbo.DELETE_PROJECTS", connection);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", id);
+
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+            return new JsonResult("Deleted Successfully");
+        }
     }
 }
