@@ -19,7 +19,7 @@ namespace ReactDonationApplication.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
+        [HttpGet] 
         public JsonResult GetOrganizations()
         {
             DataTable dt = new DataTable();
